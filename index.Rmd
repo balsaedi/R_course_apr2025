@@ -1,0 +1,2805 @@
+---
+title: "Comprehensive R Workshop"
+subtitle: "From Installation to Statistical Analysis"
+author: "Dr. Basim Alsaedi"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  revealjs::revealjs_presentation:
+    theme: simple
+    highlight: default
+    transition: slide
+    center: true
+    css: modern-reveal-css.css
+    self_contained: false
+    lib_dir: libs
+    reveal_plugins: ["notes", "search", "zoom"]
+    reveal_options:
+      slideNumber: true
+      previewLinks: false
+      hash: true
+      height: 900
+      width: 1600
+      margin: 0.1
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width = 10, fig.height = 6, fig.retina = 3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+# Comprehensive R Workshop {.title-slide data-background-gradient="linear-gradient(135deg, #3a0ca3, #4361ee)"}
+
+## From Installation to Statistical Analysis
+
+### For new and intermediate R users
+
+---
+
+# 1. Download and Install R and RStudio {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## What is R?
+
+R is a programming language and free software environment for statistical computing and graphics.
+
+- **Open source**: Free to use and modify
+- **Statistical focus**: Built specifically for data analysis and statistics
+- **Extensible**: Thousands of packages for various applications
+- **Cross-platform**: Works on Windows, macOS, and Linux
+- **Active community**: Regular updates and support
+
+---
+
+## What is RStudio?
+
+RStudio is an integrated development environment (IDE) for R.
+
+- Makes using R **easier** and more **productive**
+- **User-friendly interface** with multiple panes
+- Syntax highlighting and code completion
+- Workspace management
+- Direct visualization of plots
+- Project management capabilities
+
+---
+
+## Installing R
+
+### Windows
+
+1. Go to [CRAN](https://cran.r-project.org/)
+2. Click on "Download R for Windows"
+3. Click on "base"
+4. Click on "Download R-x.x.x for Windows" (where x.x.x is the version number)
+5. Run the downloaded `.exe` file and follow the installation prompts
+
+<div class="note">
+<strong>Note:</strong> It's best to accept the default settings during installation.
+</div>
+
+---
+
+## Installing R (cont.)
+
+### macOS
+
+1. Go to [CRAN](https://cran.r-project.org/)
+2. Click on "Download R for macOS"
+3. Download the `.pkg` file that matches your macOS version
+4. Open the downloaded file and follow the installation prompts
+
+### Linux
+
+For Ubuntu/Debian:
+```bash
+sudo apt update
+sudo apt install r-base
+```
+
+For Fedora/RHEL:
+```bash
+sudo dnf install R
+```
+
+---
+
+## Installing RStudio
+
+After installing R, install RStudio:
+
+1. Go to [RStudio Downloads](https://posit.co/download/rstudio-desktop/)
+2. Scroll down to "Installers for Supported Platforms"
+3. Download the installer for your operating system
+4. Run the installer and follow the prompts
+
+<div class="tip">
+<strong>Tip:</strong> RStudio will automatically detect your R installation.
+</div>
+
+---
+
+## Opening RStudio for the First Time
+
+When you open RStudio, you'll see four main panels:
+
+1. **Source/Editor** (top-left): Where you write and edit your code
+2. **Console** (bottom-left): Where you can run code and see results
+3. **Environment/History** (top-right): Shows your variables and command history
+4. **Files/Plots/Packages/Help** (bottom-right): Multiple tabs for various functions
+
+<div class="note">
+<strong>Note:</strong> If you don't see all panels, you can adjust the layout in View > Panes.
+</div>
+
+---
+
+## Confirming Successful Installation
+
+Let's verify your installation by running a simple command:
+
+1. In the Console (bottom-left panel), type:
+```r
+R.version
+```
+
+2. Press Enter to execute the command
+
+3. You should see information about your R version
+
+If you see the version information, congratulations! R and RStudio are installed correctly.
+
+---
+
+## Exercise: Installation and First Steps
+
+1. Install R and RStudio on your computer if you haven't already.
+2. Open RStudio and identify all four main panels.
+3. In the console, run the following commands:
+   - `R.version`
+   - `getwd()`
+   - `help(mean)`
+4. Create your first R script:
+   - Click File > New File > R Script
+   - Type `print("Hello, R World!")`
+   - Save the file (Ctrl+S or Cmd+S)
+   - Run the script (Ctrl+Enter or Cmd+Enter)
+
+---
+
+## Exercise Solutions
+
+If you completed the exercises, you should have:
+
+1. Successfully installed R and RStudio
+2. Identified all four panels in the RStudio interface
+3. Run the commands in the console:
+   - `R.version` showed your R version information
+   - `getwd()` showed your current working directory
+   - `help(mean)` opened the help documentation for the mean function
+4. Created and run your first R script that displayed:
+```
+[1] "Hello, R World!"
+```
+
+---
+
+# 2. Get Familiar with the Workflow {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## The RStudio Interface
+
+Let's explore the four main panels in more detail:
+
+1. **Source/Editor Panel**
+   - Write, edit, and save R scripts (.R files)
+   - Syntax highlighting
+   - Code completion
+   - Run code directly (Ctrl+Enter or Cmd+Enter)
+
+2. **Console Panel**
+   - Interactive R session
+   - Execute code line-by-line
+   - See immediate results
+   - Shows error messages and warnings
+
+---
+
+## The RStudio Interface (cont.)
+
+3. **Environment/History Panel**
+   - **Environment tab**: Shows all objects in your workspace
+   - **History tab**: Lists previously executed commands
+   - **Connections tab**: Manage database connections
+   - **Tutorial tab**: Access interactive tutorials
+
+4. **Files/Plots/Packages/Help Panel**
+   - **Files tab**: Navigate file system
+   - **Plots tab**: View and export graphics
+   - **Packages tab**: Install and load packages
+   - **Help tab**: Access R documentation
+   - **Viewer tab**: View local web content
+
+---
+
+## R Scripts vs. Console
+
+There are two primary ways to work with R code:
+
+### Console (Interactive Mode)
+- Good for exploration and quick calculations
+- Commands are executed immediately
+- History is not automatically saved
+
+### R Scripts (.R files)
+- Best for reproducible work
+- Can include multiple lines of code
+- Can be saved, shared, and re-run
+- Allows comments and documentation
+
+<div class="tip">
+<strong>Tip:</strong> Use the console for quick tests and scripts for work you'll want to revisit.
+</div>
+
+---
+
+## Creating and Working with Scripts
+
+To create a new R script:
+
+1. Click **File > New File > R Script** (or press Ctrl+Shift+N)
+2. Write your code in the editor
+3. Save the script with **File > Save** (or press Ctrl+S)
+4. Run code by:
+   - Pressing Ctrl+Enter (Cmd+Enter on Mac) for selected lines
+   - Clicking the "Run" button for selected lines
+   - Clicking "Source" to run the entire script
+
+<div class="note">
+<strong>Note:</strong> Save your scripts with meaningful names in an organized folder structure.
+</div>
+
+---
+
+## Comments and Code Documentation
+
+Comments make your code more readable and maintainable:
+
+```{r}
+# This is a single-line comment
+print("Hello, World!") # Comments can also be after code
+
+# Multi-line comments just use multiple # symbols
+# Like this
+# And this
+
+# ------ Section Break Comment ------
+```
+
+<div class="tip">
+<strong>Tip:</strong> Well-documented code is easier to understand when you revisit it later.
+</div>
+
+---
+
+## Working Directory
+
+The working directory is the default location where R will:
+- Look for files you want to load
+- Save files you generate
+
+To check your current working directory:
+```{r}
+getwd()
+```
+
+To set your working directory:
+```{r eval=FALSE}
+setwd("/path/to/your/directory")  # Replace with your path
+```
+
+In RStudio:
+- Use **Session > Set Working Directory**
+- Or use the Files panel to navigate and then **More > Set As Working Directory**
+
+---
+
+## RStudio Projects
+
+RStudio Projects make it easier to organize your work:
+
+- Creates a .Rproj file that stores project-specific settings
+- Automatically sets the working directory
+- Makes collaboration and version control easier
+- Keeps related files together
+
+To create a new project:
+1. Click **File > New Project**
+2. Choose project type (New Directory, Existing Directory, Version Control)
+3. Follow the wizard to set up your project
+
+<div class="tip">
+<strong>Tip:</strong> Use one project per analysis or data task.
+</div>
+
+---
+
+## Installing and Loading Packages
+
+R's functionality can be extended with packages:
+
+### Installing packages:
+```{r eval=FALSE}
+# Install a single package
+install.packages("dplyr")
+
+# Install multiple packages
+install.packages(c("ggplot2", "tidyr", "readxl"))
+```
+
+### Loading packages:
+```{r eval=FALSE}
+# Load a package to use its functions
+library(dplyr)
+library(ggplot2)
+```
+
+<div class="note">
+<strong>Note:</strong> You only need to install packages once, but you need to load them in each new R session.
+</div>
+
+---
+
+## Getting Help
+
+When you're stuck, R has built-in help:
+
+```{r eval=FALSE}
+# Get help for a specific function
+?mean
+help(mean)
+
+# Search help for a term
+??regression
+
+# Get example usage
+example(mean)
+```
+
+Additional resources:
+- **Cheatsheets**: Help > Cheatsheets in RStudio
+- **Stack Overflow**: For specific coding questions
+- **R-bloggers**: For tutorials and tips
+- **R Documentation**: [Official R documentation](https://www.rdocumentation.org/)
+
+---
+
+## Exercise: RStudio Workflow
+
+1. Create a new RStudio Project called "R_Workshop".
+2. Inside this project, create a new R script called "my_first_script.R".
+3. Add the following code to your script:
+   ```r
+   # My first R script
+   print("Learning R is fun!")
+   
+   # Create a variable
+   my_number <- 42
+   
+   # Display the variable
+   print(my_number)
+   ```
+4. Save the script and run it.
+5. Install and load the `dplyr` package.
+6. Use the help function to learn about the `filter()` function in dplyr.
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# In the console:
+# 1. Create new project: File > New Project > New Directory > New Project
+# 2. Create new script: File > New File > R Script
+
+# 3. Add code to the script:
+# My first R script
+print("Learning R is fun!")
+
+# Create a variable
+my_number <- 42
+
+# Display the variable
+print(my_number)
+
+# 4. Save script (Ctrl+S) and run (Ctrl+Shift+Enter or Source button)
+
+# 5. Install and load dplyr:
+install.packages("dplyr")
+library(dplyr)
+
+# 6. Get help for filter function:
+?dplyr::filter
+```
+
+---
+
+# 3. Execute Simple Commands {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## R as a Calculator
+
+R can be used as a powerful calculator. Type an expression and hit Enter.
+
+```{r}
+# Addition
+5 + 3
+
+# Subtraction
+10 - 7
+
+# Multiplication
+4 * 6
+
+# Division
+15 / 3
+
+# Exponents (Power)
+2^3  # 2 raised to the power of 3
+```
+
+---
+
+## Order of Operations
+
+R follows the standard mathematical order of operations (PEMDAS):
+- **P**arentheses
+- **E**xponents
+- **M**ultiplication and **D**ivision (from left to right)
+- **A**ddition and **S**ubtraction (from left to right)
+
+```{r}
+# Without parentheses
+3 + 4 * 2
+
+# With parentheses to change order
+(3 + 4) * 2
+```
+
+---
+
+## More Mathematical Operations
+
+```{r}
+# Square root
+sqrt(16)
+
+# Absolute value
+abs(-42)
+
+# Logarithms
+log(10)        # Natural logarithm (base e)
+log10(100)     # Base 10 logarithm
+log(8, base=2) # Base 2 logarithm
+
+# Trigonometric functions (in radians)
+sin(pi/2)
+cos(pi)
+tan(pi/4)
+```
+
+---
+
+## Variables
+
+Variables let you store values for later use. Use the assignment operator `<-` to create variables.
+
+```{r}
+# Assign a value to a variable
+x <- 10
+y <- 5
+
+# Use variables in calculations
+x + y
+x * y
+x / y
+
+# You can also use the = operator for assignment, but <- is preferred
+z = 15
+z
+```
+
+<div class="tip">
+<strong>Tip:</strong> Use <code>&lt;-</code> for assignment and <code>=</code> for specifying function arguments.
+</div>
+
+---
+
+## Variable Naming Rules
+
+Good variable names make your code more readable and easier to understand.
+
+### Rules for variable names:
+- Must start with a letter
+- Can contain letters, numbers, underscore (_), and period (.)
+- Cannot contain spaces or special characters
+- Are case-sensitive (age ≠ Age)
+
+```{r}
+# Valid variable names
+my_variable <- 10
+myVariable <- 20
+my.variable <- 30
+variable1 <- 40
+
+# Print a variable's value
+my_variable
+```
+
+---
+
+## Variable Naming Conventions
+
+While many naming styles are valid, consistency is key. Choose one style and stick with it.
+
+```{r}
+# Common naming styles:
+
+# snake_case (recommended for R)
+first_name <- "John"
+
+# camelCase
+firstName <- "John"
+
+# PascalCase 
+FirstName <- "John"
+
+# dot.case (less common in modern R)
+first.name <- "John"
+```
+
+<div class="note">
+<strong>Note:</strong> The tidyverse style guide recommends snake_case for variable and function names.
+</div>
+
+---
+
+## Data Types: Numeric
+
+R has several data types for representing different kinds of values.
+
+### Numeric (includes both integers and decimal numbers)
+
+```{r}
+# Integers and doubles are both numeric
+a <- 10    # This is actually stored as a double
+b <- 10.5
+
+# Check the type
+class(a)
+class(b)
+
+# Force an integer with L suffix
+c <- 10L
+class(c)
+```
+
+---
+
+## Data Types: Character
+
+### Character (for text/string data)
+
+```{r}
+# Create character strings with quotes
+name <- "Alice"
+greeting <- 'Hello, world!'
+
+# Check the type
+class(name)
+
+# Combining strings
+paste("Hello", "there")
+paste0("R", "Studio") # paste0 doesn't add spaces
+
+# String length
+nchar("Programming")
+```
+
+---
+
+## Data Types: Logical
+
+### Logical (Boolean values: TRUE or FALSE)
+
+```{r}
+# Create logical values
+is_correct <- TRUE
+has_errors <- FALSE
+
+# Check the type
+class(is_correct)
+
+# Logical operations
+TRUE & TRUE   # AND: both must be TRUE
+TRUE | FALSE  # OR: at least one must be TRUE
+!TRUE         # NOT: inverts the value
+```
+
+---
+
+## Comparisons
+
+Comparison operators return logical values (TRUE or FALSE).
+
+```{r}
+# Equal to
+5 == 5
+
+# Not equal to
+5 != 3
+
+# Greater than
+10 > 5
+
+# Less than
+3 < 7
+
+# Greater than or equal to
+5 >= 5
+
+# Less than or equal to
+4 <= 10
+```
+
+---
+
+## Basic Data Structures: Vectors
+
+Vectors are one-dimensional collections of values of the same type.
+
+```{r}
+# Create a vector with c()
+numbers <- c(2, 4, 6, 8, 10)
+fruits <- c("apple", "banana", "cherry")
+logicals <- c(TRUE, FALSE, TRUE, TRUE)
+
+# Check the type
+class(numbers)
+class(fruits)
+
+# Get the length
+length(numbers)
+
+# Access elements by position (R uses 1-based indexing)
+numbers[1]      # First element
+fruits[2]       # Second element
+numbers[c(1,3)] # First and third elements
+```
+
+---
+
+## Operating on Vectors
+
+Operations on vectors are applied to each element.
+
+```{r}
+# Create a vector
+vec <- c(10, 20, 30, 40, 50)
+
+# Add a value to each element
+vec + 5
+
+# Multiply each element
+vec * 2
+
+# Operations between vectors (element-wise)
+vec1 <- c(1, 2, 3)
+vec2 <- c(10, 20, 30)
+vec1 + vec2
+vec1 * vec2
+```
+
+---
+
+## Exercise: Basic Commands
+
+Try these exercises in RStudio:
+
+1. Create variables `height` and `width` with values 7 and 5.
+2. Calculate the area of a rectangle using these variables.
+3. Create a vector of the first 10 even numbers.
+4. Calculate the mean, min, and max of this vector.
+5. Create a logical vector testing which numbers in the vector are greater than 10.
+
+---
+
+## Exercise Solutions
+
+```{r}
+# 1. Create variables height and width
+height <- 7
+width <- 5
+
+# 2. Calculate the area of a rectangle
+area <- height * width
+area
+
+# 3. Create a vector of the first 10 even numbers
+even_numbers <- c(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)
+# Alternative: even_numbers <- seq(2, 20, by=2)
+
+# 4. Calculate mean, min, and max
+mean(even_numbers)
+min(even_numbers)
+max(even_numbers)
+
+# 5. Create a logical vector for numbers > 10
+greater_than_10 <- even_numbers > 10
+greater_than_10
+```
+
+---
+
+# 4. Use Excel and CSV Files {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## Working with External Data
+
+Working with your own data is one of the most common tasks in R:
+
+- Data often comes in formats like:
+  - CSV (Comma-Separated Values)
+  - Excel spreadsheets (.xlsx, .xls)
+  - Text files (.txt)
+  - Database exports
+
+- R provides several packages to import and export data
+
+<div class="note">
+<strong>Note:</strong> Before importing data, make sure you understand its structure.
+</div>
+
+---
+
+## Required Packages for Importing Data
+
+For this section, we'll need a few packages:
+
+```{r eval=FALSE}
+# Install packages (you only need to do this once)
+install.packages(c("readr", "readxl", "writexl"))
+
+# Load packages (do this in each new R session)
+library(readr)    # For working with CSV files
+library(readxl)   # For reading Excel files
+library(writexl)  # For writing Excel files
+```
+
+<div class="tip">
+<strong>Tip:</strong> The tidyverse collection of packages includes readr and many other useful data handling packages.
+</div>
+
+---
+
+## Importing CSV Files
+
+CSV (Comma-Separated Values) files are a common format for data exchange.
+
+```{r eval=FALSE}
+# Using base R
+data_base <- read.csv("data.csv")
+
+# Using readr (faster and more consistent)
+data_readr <- read_csv("data.csv")
+```
+
+Key arguments for `read_csv()`:
+- `file`: Path to the file
+- `col_names`: TRUE if first row contains column names
+- `na`: String(s) to interpret as missing values
+- `skip`: Number of lines to skip
+- `n_max`: Maximum number of rows to read
+
+---
+
+## Importing CSV Files with Different Delimiters
+
+Not all CSV files use commas as separators:
+
+```{r eval=FALSE}
+# Tab-delimited files
+data_tabs <- read_tsv("data.tsv")
+
+# Files with other delimiters
+data_semicolon <- read_delim("data.txt", delim = ";")
+data_pipe <- read_delim("data.txt", delim = "|")
+
+# Let readr guess the delimiter
+data_guess <- read_delim("data.txt", delim = NULL)
+```
+
+<div class="note">
+<strong>Note:</strong> European data often uses semicolons instead of commas as the delimiter.
+</div>
+
+---
+
+## Viewing Imported Data
+
+After importing data, you should examine it:
+
+```{r eval=FALSE}
+# View the first few rows
+head(data_readr)
+
+# View the last few rows
+tail(data_readr)
+
+# Get a quick summary
+glimpse(data_readr)  # From dplyr package
+str(data_readr)      # Base R alternative
+
+# Check dimensions (rows and columns)
+dim(data_readr)
+
+# Column names
+names(data_readr)
+```
+
+---
+
+## Importing Excel Files
+
+Excel files can be read using the `readxl` package:
+
+```{r eval=FALSE}
+# Read the first sheet
+data_excel <- read_excel("data.xlsx")
+
+# Read a specific sheet by name
+data_sheet2 <- read_excel("data.xlsx", sheet = "Sheet2")
+
+# Read a specific sheet by index
+data_sheet3 <- read_excel("data.xlsx", sheet = 3)
+
+# Specify a cell range
+data_range <- read_excel("data.xlsx", range = "A1:D100")
+```
+
+<div class="tip">
+<strong>Tip:</strong> Use <code>excel_sheets("data.xlsx")</code> to list all sheet names in an Excel file.
+</div>
+
+---
+
+## Exporting Data to CSV
+
+After processing data, you can export it back to CSV:
+
+```{r eval=FALSE}
+# Create a sample data frame
+my_data <- data.frame(
+  id = 1:5,
+  name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  score = c(85, 92, 78, 95, 88)
+)
+
+# Export to CSV using base R
+write.csv(my_data, "output_base.csv", row.names = FALSE)
+
+# Export using readr (faster and more consistent)
+write_csv(my_data, "output_readr.csv")
+```
+
+<div class="note">
+<strong>Note:</strong> Setting <code>row.names = FALSE</code> prevents an extra column with row numbers.
+</div>
+
+---
+
+## Exporting Data to Excel
+
+Use the `writexl` package to export to Excel:
+
+```{r eval=FALSE}
+# Export a single data frame to Excel
+write_xlsx(my_data, "output.xlsx")
+
+# Export multiple data frames as separate sheets
+data_list <- list(
+  Students = my_data,
+  Courses = data.frame(
+    course_id = 1:3,
+    course_name = c("Math", "Science", "History")
+  )
+)
+
+write_xlsx(data_list, "output_multiple_sheets.xlsx")
+```
+
+---
+
+## Handling Common CSV Import Issues
+
+CSV files often have issues that need special handling:
+
+```{r eval=FALSE}
+# Files with non-standard encodings
+data_encoded <- read_csv("data.csv", locale = locale(encoding = "Latin1"))
+
+# Files with unusual date formats
+data_dates <- read_csv("data.csv", 
+                      col_types = cols(date = col_date(format = "%d/%m/%Y")))
+
+# Files with quoted fields
+data_quoted <- read_csv("data.csv", quote = "'")
+
+# Dealing with comment characters
+data_with_comments <- read_csv("data.csv", comment = "#")
+```
+
+---
+
+## Using RStudio's Import Dataset Feature
+
+RStudio provides a graphical interface for importing data:
+
+1. Click **File > Import Dataset** menu
+2. Choose the appropriate file type
+3. Navigate to and select your file
+4. Preview the data and adjust import settings
+5. Click **Import**
+
+The interface will also generate the R code needed to reproduce the import.
+
+<div class="tip">
+<strong>Tip:</strong> This is a great way to learn the right parameters for importing tricky files.
+</div>
+
+---
+
+## Exercise: Working with CSV and Excel Files
+
+1. Create a simple data frame in R:
+   ```r
+   students <- data.frame(
+     id = 1:5,
+     name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+     grade = c("A", "B+", "B", "A-", "B+"),
+     score = c(95, 87, 82, 91, 85)
+   )
+   ```
+
+2. Export this data frame to:
+   - A CSV file named "students.csv"
+   - An Excel file named "students.xlsx"
+
+3. Import both files back into R with different variable names.
+
+4. Verify that the imported data matches the original data.
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# 1. Create the data frame
+students <- data.frame(
+  id = 1:5,
+  name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  grade = c("A", "B+", "B", "A-", "B+"),
+  score = c(95, 87, 82, 91, 85)
+)
+
+# 2. Export to CSV and Excel
+library(readr)
+library(writexl)
+
+write_csv(students, "students.csv")
+write_xlsx(students, "students.xlsx")
+
+# 3. Import back with different names
+students_csv <- read_csv("students.csv")
+library(readxl)
+students_excel <- read_excel("students.xlsx")
+
+# 4. Verify the data matches
+head(students)
+head(students_csv)
+head(students_excel)
+
+# Check if all are identical
+all.equal(students, students_csv)
+all.equal(students, students_excel)
+```
+
+---
+
+# 5. Read Data {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## Understanding Data Sources
+
+R can read data from many sources:
+
+- **Files**: CSV, Excel, text files, JSON, etc.
+- **Databases**: SQL databases, MongoDB, etc.
+- **Web**: Web APIs, web scraping
+- **Statistical software**: SPSS, SAS, Stata files
+- **Spatial data**: Shapefiles, GeoJSON
+- **Built-in datasets**: R comes with example datasets
+
+<div class="note">
+<strong>Note:</strong> Different sources require different approaches and packages.
+</div>
+
+---
+
+## Built-in Datasets in R
+
+R comes with several built-in datasets for learning and testing:
+
+```{r}
+# List all available datasets
+data()
+
+# Load a specific dataset
+data(mtcars)
+
+# Examine the dataset
+head(mtcars)
+str(mtcars)
+```
+
+<div class="tip">
+<strong>Tip:</strong> Use <code>?mtcars</code> to get documentation about a built-in dataset.
+</div>
+
+---
+
+## Reading Data from Different File Formats
+
+Different file formats require different functions and packages:
+
+```{r eval=FALSE}
+# CSV files (we've seen this already)
+library(readr)
+df_csv <- read_csv("data.csv")
+
+# Tab-delimited text
+df_tab <- read_tsv("data.txt")
+
+# Fixed-width files
+df_fixed <- read_fwf("data.txt", 
+                     widths = c(10, 5, 20, 15),
+                     col_names = c("name", "id", "address", "phone"))
+
+# JSON files
+library(jsonlite)
+df_json <- fromJSON("data.json")
+```
+
+---
+
+## Reading Data from Databases
+
+To connect to databases, you'll need specific packages:
+
+```{r eval=FALSE}
+# SQL databases with DBI and a backend driver
+library(DBI)
+library(RSQLite)  # For SQLite databases
+
+# Connect to a SQLite database
+con <- dbConnect(RSQLite::SQLite(), "my_database.sqlite")
+
+# Read data from a table
+df_sql <- dbReadTable(con, "my_table")
+
+# Run a SQL query
+df_query <- dbGetQuery(con, "SELECT * FROM my_table WHERE value > 100")
+
+# Always disconnect when done
+dbDisconnect(con)
+```
+
+---
+
+## Reading Data from the Web
+
+R can fetch data directly from the web:
+
+```{r eval=FALSE}
+# Download a CSV file from the web
+url <- "https://data.example.com/dataset.csv"
+df_web <- read_csv(url)
+
+# Web APIs often return JSON data
+library(httr)
+library(jsonlite)
+
+response <- GET("https://api.example.com/data")
+data <- fromJSON(content(response, "text"))
+
+# Convert to a data frame if needed
+df_api <- as.data.frame(data)
+```
+
+---
+
+## Reading Data from Other Statistical Software
+
+The `haven` package can read data from other statistical software:
+
+```{r eval=FALSE}
+library(haven)
+
+# Read SPSS data
+df_spss <- read_spss("data.sav")
+
+# Read SAS data
+df_sas <- read_sas("data.sas7bdat")
+
+# Read Stata data
+df_stata <- read_dta("data.dta")
+```
+
+<div class="note">
+<strong>Note:</strong> These functions preserve variable labels and value labels from the original files.
+</div>
+
+---
+
+## Understanding Data Structure After Import
+
+After importing, check the structure to ensure proper data types:
+
+```{r eval=FALSE}
+# Basic structure
+str(df)
+
+# Column types
+sapply(df, class)
+
+# Summary statistics
+summary(df)
+
+# Number of missing values per column
+colSums(is.na(df))
+```
+
+<div class="tip">
+<strong>Tip:</strong> Always inspect your data after importing to catch any issues early.
+</div>
+
+---
+
+## Converting Data Types
+
+Often you'll need to convert columns to different data types:
+
+```{r eval=FALSE}
+# Convert a character to numeric
+df$numeric_column <- as.numeric(df$character_column)
+
+# Convert a character to factor (categorical)
+df$factor_column <- as.factor(df$character_column)
+
+# Convert to date
+library(lubridate)
+df$date_column <- ymd(df$character_date)  # Year-Month-Day format
+
+# Multiple conversions with dplyr
+library(dplyr)
+df <- df %>%
+  mutate(
+    num_col = as.numeric(char_col),
+    factor_col = as.factor(category_col),
+    date_col = ymd(date_string)
+  )
+```
+
+---
+
+## Subsetting Data
+
+You'll often need to work with subsets of your data:
+
+```{r}
+# Create a sample data frame
+df <- data.frame(
+  id = 1:6,
+  gender = c("M", "F", "F", "M", "M", "F"),
+  score = c(85, 92, 78, 95, 88, 72)
+)
+
+# Subset rows by condition (base R)
+males <- df[df$gender == "M", ]
+high_scores <- df[df$score > 85, ]
+
+# Subset using dplyr
+library(dplyr)
+males_dplyr <- filter(df, gender == "M")
+high_scores_dplyr <- filter(df, score > 85)
+
+# Select specific columns
+names_scores <- df[, c("id", "score")]
+
+# Select using dplyr
+names_scores_dplyr <- select(df, id, score)
+```
+
+---
+
+## Exercise: Reading and Exploring Data
+
+1. Load the built-in `iris` dataset:
+   ```r
+   data(iris)
+   ```
+
+2. Explore the dataset:
+   - Check its structure
+   - View the first few rows
+   - Get summary statistics
+   - Count the number of each species
+
+3. Create a subset of the data containing only the setosa species.
+
+4. Create a CSV file from this subset, then read it back into R.
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# 1. Load the dataset
+data(iris)
+
+# 2. Explore the dataset
+# Check structure
+str(iris)
+
+# View first few rows
+head(iris)
+
+# Get summary statistics
+summary(iris)
+
+# Count species
+table(iris$Species)
+
+# 3. Create a subset for setosa
+setosa <- iris[iris$Species == "setosa", ]
+# Or with dplyr:
+library(dplyr)
+setosa_dplyr <- filter(iris, Species == "setosa")
+
+# 4. Write to CSV and read back
+write.csv(setosa, "setosa.csv", row.names = FALSE)
+setosa_read <- read.csv("setosa.csv")
+
+# Verify
+head(setosa_read)
+```
+
+---
+
+# 6. Data Cleaning {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## Why Data Cleaning is Important
+
+Data cleaning (or data wrangling) is a crucial step in any data analysis:
+
+- **Real-world data is messy**
+  - Missing values
+  - Inconsistent formats
+  - Duplicate records
+  - Outliers
+  - Errors
+
+- **Clean data leads to:**
+  - More reliable analyses
+  - Accurate insights
+  - Reproducible results
+  - Easier visualization
+
+<div class="note">
+<strong>Note:</strong> Data cleaning often takes 60-80% of the time in a data analysis project!
+</div>
+
+---
+
+## Common Data Cleaning Tasks
+
+These are the most common data cleaning operations:
+
+1. Handling missing values
+2. Fixing inconsistent data
+3. Removing duplicates
+4. Handling outliers
+5. Converting data types
+6. Standardizing values
+7. Renaming columns
+8. Creating calculated fields
+
+---
+
+## Required Packages for Data Cleaning
+
+We'll use these packages for data cleaning:
+
+```{r eval=FALSE}
+# Install packages (one-time step)
+install.packages(c("tidyr", "dplyr", "stringr", "lubridate"))
+
+# Load packages
+library(tidyr)    # For tidying data
+library(dplyr)    # For data manipulation
+library(stringr)  # For string operations
+library(lubridate) # For date manipulation
+```
+
+<div class="tip">
+<strong>Tip:</strong> These packages are all part of the tidyverse collection.
+</div>
+
+---
+
+## Handling Missing Values
+
+Identifying and addressing missing values is a critical step:
+
+```{r}
+# Create a data frame with missing values
+df <- data.frame(
+  id = 1:5,
+  name = c("Alice", "Bob", NA, "David", "Eve"),
+  score = c(85, NA, 78, 95, NA)
+)
+
+# Count missing values per column
+colSums(is.na(df))
+
+# Drop rows with any missing values
+df_complete <- na.omit(df)
+
+# Fill missing values with a specific value
+df$score[is.na(df$score)] <- 0
+```
+
+---
+
+## More Ways to Handle Missing Values
+
+```{r eval=FALSE}
+# Using tidyr and dplyr
+library(tidyr)
+library(dplyr)
+
+# Replace NA with specific value
+df_filled <- df %>%
+  mutate(
+    name = ifelse(is.na(name), "Unknown", name),
+    score = ifelse(is.na(score), 0, score)
+  )
+
+# Fill with previous or next non-missing value
+df_filled <- df %>%
+  fill(name, .direction = "down") %>%  # Fill NAs with previous value
+  fill(score, .direction = "up")       # Fill NAs with next value
+
+# Replace with mean (for numeric data)
+df_mean <- df %>%
+  mutate(score = ifelse(is.na(score), mean(score, na.rm = TRUE), score))
+```
+
+---
+
+## Removing Duplicate Records
+
+Duplicate records can skew your analysis:
+
+```{r}
+# Create data with duplicates
+df_dup <- data.frame(
+  id = c(1, 2, 2, 3, 4, 4),
+  value = c(10, 20, 20, 30, 40, 40)
+)
+
+# Find duplicates
+duplicated(df_dup)
+
+# Count duplicates
+sum(duplicated(df_dup))
+
+# Remove duplicates (keep first occurrence)
+df_unique <- df_dup[!duplicated(df_dup), ]
+
+# Or with dplyr
+df_unique_dplyr <- distinct(df_dup)
+```
+
+---
+
+## Standardizing Text Data
+
+Inconsistent text data is a common problem:
+
+```{r}
+# Create data with inconsistent text
+df_text <- data.frame(
+  id = 1:5,
+  category = c("Electronics", "electronics", "ELECTRONICS", "Electronic", "electronic")
+)
+
+# Convert to lowercase
+df_text$category <- tolower(df_text$category)
+
+# Using stringr for more complex text cleaning
+library(stringr)
+
+# Trim whitespace
+df_text$category <- str_trim(df_text$category)
+
+# Replace patterns
+df_text$category <- str_replace(df_text$category, "electronic", "electronics")
+```
+
+---
+
+## Standardizing Date Formats
+
+Dates often come in different formats:
+
+```{r eval=FALSE}
+# Create data with inconsistent dates
+df_dates <- data.frame(
+  id = 1:4,
+  date = c("2023-01-15", "01/15/2023", "15-Jan-2023", "January 15, 2023")
+)
+
+# Convert to consistent date format using lubridate
+library(lubridate)
+
+# Create a new standardized date column
+df_dates <- df_dates %>%
+  mutate(
+    date_std = case_when(
+      str_detect(date, "\\d{4}-\\d{2}-\\d{2}") ~ ymd(date),
+      str_detect(date, "\\d{2}/\\d{2}/\\d{4}") ~ mdy(date),
+      str_detect(date, "\\d{2}-\\w{3}-\\d{4}") ~ dmy(date),
+      TRUE ~ mdy(date)
+    )
+  )
+```
+
+---
+
+## Handling Outliers
+
+Outliers can significantly impact your analysis:
+
+```{r}
+# Create data with outliers
+set.seed(123)
+normal_values <- rnorm(99, mean = 100, sd = 10)
+outliers <- c(50, 150)
+data_with_outliers <- c(normal_values, outliers)
+
+# Identify outliers using IQR method
+q1 <- quantile(data_with_outliers, 0.25)
+q3 <- quantile(data_with_outliers, 0.75)
+iqr <- q3 - q1
+lower_bound <- q1 - 1.5 * iqr
+upper_bound <- q3 + 1.5 * iqr
+
+# Find outliers
+outliers <- data_with_outliers < lower_bound | data_with_outliers > upper_bound
+sum(outliers)
+
+# Remove or cap outliers
+data_clean <- data_with_outliers[!outliers]
+data_capped <- pmin(pmax(data_with_outliers, lower_bound), upper_bound)
+```
+
+---
+
+## Renaming Columns
+
+Clear column names improve code readability:
+
+```{r}
+# Data with unclear column names
+df_names <- data.frame(
+  ID = 1:3,
+  F.Name = c("John", "Alice", "Bob"),
+  L.Name = c("Smith", "Johnson", "Brown"),
+  DOB = c("1990-05-15", "1985-11-30", "1992-08-22")
+)
+
+# Rename columns with base R
+# names(df_names) <- c("id", "first_name", "last_name", "birth_date")
+
+# Using dplyr
+library(dplyr)
+df_renamed <- df_names %>%
+  rename(
+    id = ID,
+    first_name = F.Name,
+    last_name = L.Name,
+    birth_date = DOB
+  )
+```
+
+---
+
+## Creating Calculated Fields
+
+Derived fields can provide new insights:
+
+```{r}
+# Create sample data
+df_calc <- data.frame(
+  id = 1:3,
+  first_name = c("John", "Alice", "Bob"),
+  last_name = c("Smith", "Johnson", "Brown"),
+  birth_date = c("1990-05-15", "1985-11-30", "1992-08-22"),
+  height_cm = c(175, 162, 180),
+  weight_kg = c(75, 58, 85)
+)
+
+# Create calculated fields
+df_calc <- df_calc %>%
+  mutate(
+    full_name = paste(first_name, last_name),
+    birth_date = lubridate::ymd(birth_date),
+    age = floor(as.numeric(difftime(Sys.Date(), birth_date, units = "days")) / 365.25),
+    bmi = weight_kg / ((height_cm / 100)^2),
+    weight_status = case_when(
+      bmi < 18.5 ~ "Underweight",
+      bmi < 25 ~ "Normal",
+      bmi < 30 ~ "Overweight",
+      TRUE ~ "Obese"
+    )
+  )
+```
+
+---
+
+## Restructuring Data: Wide to Long
+
+Data often needs to be reshaped for analysis:
+
+```{r eval=FALSE}
+# Wide format data
+df_wide <- data.frame(
+  id = 1:3,
+  name = c("Alice", "Bob", "Charlie"),
+  math = c(85, 92, 78),
+  science = c(92, 85, 90),
+  history = c(78, 88, 95)
+)
+
+# Convert to long format
+library(tidyr)
+df_long <- df_wide %>%
+  pivot_longer(
+    cols = c(math, science, history),
+    names_to = "subject",
+    values_to = "score"
+  )
+```
+
+---
+
+## Restructuring Data: Long to Wide
+
+Sometimes we need to go from long to wide format:
+
+```{r eval=FALSE}
+# Long format data
+df_long <- data.frame(
+  id = rep(1:3, each = 3),
+  name = rep(c("Alice", "Bob", "Charlie"), each = 3),
+  subject = rep(c("math", "science", "history"), 3),
+  score = c(85, 92, 78, 92, 85, 90, 78, 88, 95)
+)
+
+# Convert to wide format
+df_wide <- df_long %>%
+  pivot_wider(
+    names_from = subject,
+    values_from = score
+  )
+```
+
+---
+
+## Data Cleaning Workflow
+
+A typical data cleaning workflow includes:
+
+1. Import the data
+2. Inspect the structure and summary
+3. Address missing values
+4. Fix inconsistent/incorrect data
+5. Remove duplicates if necessary
+6. Create derived fields
+7. Reshape data if needed
+8. Export clean data
+
+<div class="tip">
+<strong>Tip:</strong> Document your cleaning steps to ensure reproducibility.
+</div>
+
+---
+
+## Exercise: Data Cleaning
+
+Use the following data for this exercise:
+```r
+# Create a messy dataset
+messy_data <- data.frame(
+  ID = c(1, 2, 2, 3, 4, 5),
+  Name = c("john smith", "JANE DOE", "Jane Doe", "Bob", NA, "Alice"),
+  Age = c(25, 30, 30, NA, 40, "thirty-five"),
+  Income = c("$45,000", "$60K", "$60,000", NA, "$55,000", "$48000"),
+  Date = c("2023-01-15", "01/15/2023", "01/15/2023", "Feb 15, 2023", NA, "2023-02-20")
+)
+```
+
+Clean this data:
+1. Remove duplicates
+2. Handle missing values
+3. Standardize names (proper case)
+4. Convert Age to numeric
+5. Clean and standardize Income
+6. Convert Date to a consistent format
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# Create the messy dataset
+messy_data <- data.frame(
+  ID = c(1, 2, 2, 3, 4, 5),
+  Name = c("john smith", "JANE DOE", "Jane Doe", "Bob", NA, "Alice"),
+  Age = c(25, 30, 30, NA, 40, "thirty-five"),
+  Income = c("$45,000", "$60K", "$60,000", NA, "$55,000", "$48000"),
+  Date = c("2023-01-15", "01/15/2023", "01/15/2023", "Feb 15, 2023", NA, "2023-02-20"),
+  stringsAsFactors = FALSE
+)
+
+# Load required packages
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+
+# Clean the data
+clean_data <- messy_data %>%
+  # Remove duplicates
+  distinct() %>%
+  
+  # Handle missing values
+  mutate(
+    Name = ifelse(is.na(Name), "Unknown", Name),
+    
+    # Standardize names (proper case)
+    Name = str_to_title(Name),
+    
+    # Clean and convert Age to numeric
+    Age = case_when(
+      Age == "thirty-five" ~ "35",
+      TRUE ~ as.character(Age)
+    ),
+    Age = as.numeric(Age),
+    
+    # Fill missing Age with mean
+    Age = ifelse(is.na(Age), mean(as.numeric(Age), na.rm = TRUE), Age),
+    
+    # Clean Income
+    Income = str_replace(Income, "\\$|,", ""),
+    Income = str_replace(Income, "K", "000"),
+    Income = as.numeric(Income),
+    
+    # Standardize Date
+    Date = case_when(
+      str_detect(Date, "\\d{4}-\\d{2}-\\d{2}") ~ ymd(Date),
+      str_detect(Date, "\\d{2}/\\d{2}/\\d{4}") ~ mdy(Date),
+      str_detect(Date, "^[A-Za-z]") ~ mdy(Date),
+      TRUE ~ as.Date(NA)
+    )
+  )
+
+# View the result
+clean_data
+```
+
+---
+
+# 7. Measures of Central Tendency {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## Understanding Central Tendency
+
+Central tendency measures help us understand the "typical" value in a dataset:
+
+- They summarize a dataset with a single value
+- They represent the center or middle of the data distribution
+- Different measures are appropriate in different situations
+
+<div class="note">
+<strong>Note:</strong> Always consider which measure of central tendency best represents your data.
+</div>
+
+---
+
+## The Mean (Average)
+
+The mean is the sum of all values divided by the number of values:
+
+```{r}
+# Create a sample dataset
+scores <- c(85, 92, 78, 90, 85, 96, 80, 88)
+
+# Calculate the mean
+mean(scores)
+
+# Calculate manually
+sum(scores) / length(scores)
+```
+
+<div class="tip">
+<strong>Tip:</strong> The mean is sensitive to outliers - a few extreme values can significantly affect it.
+</div>
+
+---
+
+## The Median
+
+The median is the middle value when data is arranged in order:
+
+```{r}
+# Using the same dataset
+scores <- c(85, 92, 78, 90, 85, 96, 80, 88)
+
+# Calculate the median
+median(scores)
+
+# With an odd number of values
+scores_odd <- c(85, 92, 78, 90, 85, 96, 80)
+median(scores_odd)
+```
+
+<div class="note">
+<strong>Note:</strong> The median is less sensitive to outliers than the mean, making it more robust for skewed data.
+</div>
+
+---
+
+## The Mode
+
+The mode is the most frequently occurring value:
+
+```{r}
+# Dataset with a clear mode
+scores <- c(85, 92, 78, 90, 85, 96, 80, 85, 88)
+
+# R doesn't have a built-in mode function, so we create one
+find_mode <- function(x) {
+  unique_x <- unique(x)
+  unique_x[which.max(tabulate(match(x, unique_x)))]
+}
+
+# Find the mode
+find_mode(scores)
+
+# Alternative approach using table
+table(scores)
+names(which.max(table(scores)))
+```
+
+---
+
+## Mean, Median, and Mode with Normal Distribution
+
+With normally distributed data, the three measures are approximately equal:
+
+```{r}
+# Generate normally distributed data
+set.seed(123)
+normal_data <- rnorm(1000, mean = 100, sd = 15)
+
+# Calculate measures
+mean(normal_data)
+median(normal_data)
+find_mode(round(normal_data))  # Rounding for practical mode calculation
+
+# Visualize
+hist(normal_data, breaks = 30, main = "Normal Distribution",
+     col = "skyblue", border = "white")
+abline(v = mean(normal_data), col = "red", lwd = 2)
+abline(v = median(normal_data), col = "blue", lwd = 2, lty = 2)
+```
+
+---
+
+## Mean, Median, and Mode with Skewed Distribution
+
+With skewed data, the three measures differ:
+
+```{r}
+# Generate right-skewed data
+set.seed(123)
+skewed_data <- rexp(1000, rate = 0.1)
+
+# Calculate measures
+mean(skewed_data)
+median(skewed_data)
+find_mode(round(skewed_data, 1))  # Rounding for practical mode calculation
+
+# Visualize
+hist(skewed_data, breaks = 30, main = "Right-Skewed Distribution",
+     col = "lightgreen", border = "white")
+abline(v = mean(skewed_data), col = "red", lwd = 2)
+abline(v = median(skewed_data), col = "blue", lwd = 2, lty = 2)
+```
+
+---
+
+## Weighted Mean
+
+When values have different importance or frequency:
+
+```{r}
+# Data: student scores and their weights (credits)
+scores <- c(85, 92, 78, 90)
+credits <- c(3, 4, 2, 3)
+
+# Calculate weighted mean
+weighted.mean(scores, credits)
+
+# Manual calculation
+sum(scores * credits) / sum(credits)
+```
+
+<div class="note">
+<strong>Note:</strong> Weighted means are useful for GPAs, portfolio returns, and other weighted scenarios.
+</div>
+
+---
+
+## Trimmed Mean
+
+The trimmed mean removes extreme values before calculating:
+
+```{r}
+# Data with outliers
+data_with_outliers <- c(85, 92, 78, 90, 85, 96, 80, 88, 35, 100)
+
+# Regular mean
+mean(data_with_outliers)
+
+# 10% trimmed mean (removes 10% from each end)
+mean(data_with_outliers, trim = 0.1)
+
+# 20% trimmed mean
+mean(data_with_outliers, trim = 0.2)
+```
+
+<div class="tip">
+<strong>Tip:</strong> Trimmed means provide robustness against outliers while using more data than the median.
+</div>
+
+---
+
+## Geometric Mean
+
+The geometric mean is useful for growth rates and ratios:
+
+```{r}
+# Growth multipliers (e.g., 1.05 = 5% growth)
+growth_rates <- c(1.03, 1.06, 1.04, 1.07, 1.02)
+
+# Geometric mean
+geometric_mean <- prod(growth_rates)^(1/length(growth_rates))
+geometric_mean
+
+# Using exp() and log()
+exp(mean(log(growth_rates)))
+```
+
+<div class="note">
+<strong>Note:</strong> The geometric mean is always ≤ the arithmetic mean, with equality only when all values are equal.
+</div>
+
+---
+
+## Harmonic Mean
+
+The harmonic mean is useful for rates and speeds:
+
+```{r}
+# Speeds in different segments (mph)
+speeds <- c(40, 60, 30, 50)
+
+# Harmonic mean
+harmonic_mean <- length(speeds) / sum(1/speeds)
+harmonic_mean
+```
+
+<div class="tip">
+<strong>Tip:</strong> Use the harmonic mean when averaging rates or speeds over fixed distances.
+</div>
+
+---
+
+## Central Tendency with Grouped Data
+
+With grouped data, we need to account for frequencies:
+
+```{r}
+# Score groups and their frequencies
+scores <- c(50, 60, 70, 80, 90)
+frequencies <- c(5, 8, 15, 10, 2)
+
+# Weighted mean (equivalent to mean of ungrouped data)
+weighted.mean(scores, frequencies)
+
+# Alternative calculation
+sum(scores * frequencies) / sum(frequencies)
+```
+
+---
+
+## Choosing the Right Measure
+
+Guidelines for selecting the appropriate measure:
+
+- **Mean**: Best for normally distributed data without outliers
+- **Median**: Best for skewed data or data with outliers
+- **Mode**: Best for categorical data or finding the most common value
+- **Weighted Mean**: When values have different importance
+- **Trimmed Mean**: For data with outliers but wanting to use more values than the median
+- **Geometric Mean**: For growth rates, returns, or ratios
+- **Harmonic Mean**: For rates or speeds
+
+---
+
+## Exercise: Measures of Central Tendency
+
+Use the following datasets for this exercise:
+
+```r
+# Dataset 1: Student exam scores
+exam_scores <- c(65, 72, 83, 85, 85, 86, 89, 91, 92, 97)
+
+# Dataset 2: Skewed income data
+incomes <- c(28000, 32000, 35000, 38000, 42000, 48000, 58000, 65000, 120000, 380000)
+
+# Dataset 3: Car speeds on different road segments (mph)
+speeds <- c(45, 55, 35, 25, 60, 40)
+distances <- c(5, 10, 3, 2, 8, 4)  # miles for each segment
+```
+
+For each dataset:
+1. Calculate the appropriate measures of central tendency
+2. Explain which measure is most appropriate and why
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# Dataset 1: Student exam scores
+exam_scores <- c(65, 72, 83, 85, 85, 86, 89, 91, 92, 97)
+
+# Calculate measures
+mean(exam_scores)
+median(exam_scores)
+find_mode <- function(x) {
+  unique_x <- unique(x)
+  unique_x[which.max(tabulate(match(x, unique_x)))]
+}
+find_mode(exam_scores)
+
+# For Dataset 1: The mean is most appropriate because the data is fairly symmetrically 
+# distributed without extreme outliers.
+
+# Dataset 2: Skewed income data
+incomes <- c(28000, 32000, 35000, 38000, 42000, 48000, 58000, 65000, 120000, 380000)
+
+# Calculate measures
+mean(incomes)
+median(incomes)
+mean(incomes, trim = 0.1)  # 10% trimmed mean
+
+# For Dataset 2: The median is most appropriate because the data is highly skewed with 
+# extreme outliers (high income values).
+
+# Dataset 3: Car speeds on different road segments
+speeds <- c(45, 55, 35, 25, 60, 40)  # mph
+distances <- c(5, 10, 3, 2, 8, 4)    # miles
+
+# Arithmetic mean of speeds
+mean(speeds)
+
+# Weighted mean (by distance)
+weighted.mean(speeds, distances)
+
+# Harmonic mean (appropriate for speeds over fixed distances)
+harmonic_mean <- length(speeds) / sum(1/speeds)
+harmonic_mean
+
+# Time for each segment
+times <- distances / speeds  # hours per segment
+total_distance <- sum(distances)
+total_time <- sum(times)
+average_speed <- total_distance / total_time
+average_speed  # Same as harmonic mean
+
+# For Dataset 3: The harmonic mean is most appropriate for averaging speeds over
+# different distances, as it correctly accounts for the relationship between
+# speed, distance, and time.
+```
+
+---
+
+# 8. Dispersion Measures {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## Understanding Data Dispersion
+
+Dispersion measures tell us how spread out our data is:
+
+- They describe the variability or scatter in a dataset
+- They complement central tendency measures
+- Different datasets can have the same central value but very different dispersion
+
+<div class="note">
+<strong>Note:</strong> Understanding dispersion is crucial for proper data interpretation.
+</div>
+
+---
+
+## Range
+
+The range is the difference between the maximum and minimum values:
+
+```{r}
+# Sample data
+scores <- c(65, 72, 83, 85, 86, 89, 91, 92, 97)
+
+# Calculate range
+range_value <- max(scores) - min(scores)
+range_value
+
+# R's range() function returns min and max
+range(scores)
+```
+
+<div class="tip">
+<strong>Tip:</strong> The range is simple but highly influenced by outliers.
+</div>
+
+---
+
+## Quartiles and the Interquartile Range (IQR)
+
+Quartiles divide ordered data into four equal parts:
+
+```{r}
+# Calculate quartiles
+quartiles <- quantile(scores, probs = c(0.25, 0.5, 0.75))
+quartiles
+
+# Interquartile Range (IQR)
+iqr <- IQR(scores)
+iqr
+
+# Alternative calculation
+q3 <- quantile(scores, 0.75)
+q1 <- quantile(scores, 0.25)
+q3 - q1
+```
+
+<div class="note">
+<strong>Note:</strong> The IQR contains the middle 50% of the data and is resistant to outliers.
+</div>
+
+---
+
+## Variance
+
+Variance measures the average squared deviation from the mean:
+
+```{r}
+# Calculate variance
+var(scores)
+
+# Manual calculation
+mean_score <- mean(scores)
+sum((scores - mean_score)^2) / (length(scores) - 1)
+```
+
+<div class="tip">
+<strong>Tip:</strong> We divide by n-1 (not n) for sample variance to get an unbiased estimator of population variance.
+</div>
+
+---
+
+## Standard Deviation
+
+Standard deviation is the square root of variance:
+
+```{r}
+# Calculate standard deviation
+sd(scores)
+
+# Manual calculation
+sqrt(var(scores))
+```
+
+<div class="note">
+<strong>Note:</strong> Standard deviation is in the same units as the original data, making it easier to interpret than variance.
+</div>
+
+---
+
+## Coefficient of Variation
+
+The coefficient of variation (CV) is the standard deviation relative to the mean:
+
+```{r}
+# Calculate coefficient of variation
+cv <- sd(scores) / mean(scores) * 100  # as percentage
+cv
+
+# Compare with a different dataset with the same mean
+scores2 <- c(55, 65, 75, 85, 95, 105)
+mean(scores2)  # Same mean as original
+sd(scores2)    # Different standard deviation
+cv2 <- sd(scores2) / mean(scores2) * 100
+cv2
+```
+
+<div class="tip">
+<strong>Tip:</strong> The CV is useful for comparing dispersion between datasets with different units or scales.
+</div>
+
+---
+
+## Mean Absolute Deviation (MAD)
+
+The MAD is the average of absolute deviations from the mean:
+
+```{r}
+# Calculate Mean Absolute Deviation
+mean_score <- mean(scores)
+mad_value <- mean(abs(scores - mean_score))
+mad_value
+
+# R's built-in mad() uses a different definition (median absolute deviation)
+mad(scores)
+```
+
+<div class="note">
+<strong>Note:</strong> MAD is more intuitive than variance but less mathematically tractable.
+</div>
+
+---
+
+## Percentiles
+
+Percentiles divide the data into 100 equal parts:
+
+```{r}
+# Calculate percentiles
+quantile(scores, probs = c(0.1, 0.25, 0.5, 0.75, 0.9))
+
+# Generate more percentiles
+percentiles <- quantile(scores, probs = seq(0, 1, 0.1))
+percentiles
+```
+
+<div class="tip">
+<strong>Tip:</strong> Percentiles are valuable for understanding data distribution and identifying outliers.
+</div>
+
+---
+
+## Box Plots for Visualizing Dispersion
+
+Box plots visually summarize the five-number summary:
+
+```{r}
+# Create a boxplot
+boxplot(scores, main = "Boxplot of Scores", col = "lightblue")
+
+# Compare multiple distributions
+scores_high <- scores + 10
+scores_variable <- c(scores, scores + 20)
+boxplot(scores, scores_high, scores_variable, 
+        names = c("Original", "Higher", "More Variable"),
+        col = c("lightblue", "lightgreen", "lightpink"))
+```
+
+---
+
+## Normal Distribution and Standard Deviation
+
+In a normal distribution, standard deviation has specific interpretations:
+
+```{r}
+# Generate normally distributed data
+set.seed(123)
+normal_data <- rnorm(1000, mean = 100, sd = 15)
+
+# Calculate mean and standard deviation
+mean_value <- mean(normal_data)
+sd_value <- sd(normal_data)
+
+# Percentage within 1, 2, and 3 standard deviations
+within_1sd <- sum(abs(normal_data - mean_value) <= sd_value) / length(normal_data)
+within_2sd <- sum(abs(normal_data - mean_value) <= 2*sd_value) / length(normal_data)
+within_3sd <- sum(abs(normal_data - mean_value) <= 3*sd_value) / length(normal_data)
+
+c(within_1sd, within_2sd, within_3sd)
+```
+
+In theory: ~68% within 1 SD, ~95% within 2 SD, ~99.7% within 3 SD.
+
+---
+
+## Z-scores (Standardization)
+
+Z-scores represent how many standard deviations a value is from the mean:
+
+```{r}
+# Calculate z-scores
+z_scores <- scale(scores)
+z_scores
+
+# Manual calculation
+(scores - mean(scores)) / sd(scores)
+
+# Find unusual values (|z| > 2)
+abs(z_scores) > 2
+```
+
+<div class="tip">
+<strong>Tip:</strong> Z-scores allow comparison of values from different distributions.
+</div>
+
+---
+
+## Dispersion Measures for Grouped Data
+
+For grouped data, we need to account for frequencies:
+
+```{r}
+# Score groups and their frequencies
+values <- c(10, 20, 30, 40, 50)
+freq <- c(5, 8, 15, 10, 2)
+
+# Weighted mean
+weighted_mean <- weighted.mean(values, freq)
+
+# Weighted variance
+numerator <- sum(freq * (values - weighted_mean)^2)
+denominator <- sum(freq)
+weighted_var <- numerator / denominator
+weighted_sd <- sqrt(weighted_var)
+
+c(weighted_mean, weighted_var, weighted_sd)
+```
+
+---
+
+## Choosing the Right Dispersion Measure
+
+Guidelines for selecting the appropriate dispersion measure:
+
+- **Range**: Quick overview but sensitive to outliers
+- **IQR**: Robust measure not affected by outliers
+- **Standard Deviation**: Most common measure, best for normally distributed data
+- **Coefficient of Variation**: For comparing dispersion across datasets with different scales
+- **Z-scores**: For identifying unusual values within a dataset
+
+---
+
+## Exercise: Dispersion Measures
+
+Use the following datasets for this exercise:
+
+```r
+# Dataset 1: Two classes' test scores
+class_a <- c(72, 75, 80, 82, 85, 85, 86, 88, 90, 95)
+class_b <- c(60, 70, 75, 80, 82, 85, 88, 90, 92, 96)
+
+# Dataset 2: Salaries at two companies (in thousands)
+company_x <- c(45, 48, 52, 55, 58, 60, 62, 65, 90, 150)
+company_y <- c(50, 52, 54, 56, 58, 60, 62, 64, 66, 68)
+```
+
+For each pair of datasets:
+1. Calculate and compare their means
+2. Calculate and compare their standard deviations
+3. Calculate the coefficient of variation for each
+4. Create boxplots to visualize the differences
+5. Determine which dataset has more dispersion and explain why
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# Dataset 1: Two classes' test scores
+class_a <- c(72, 75, 80, 82, 85, 85, 86, 88, 90, 95)
+class_b <- c(60, 70, 75, 80, 82, 85, 88, 90, 92, 96)
+
+# 1. Compare means
+mean_a <- mean(class_a)
+mean_b <- mean(class_b)
+c(mean_a, mean_b)
+
+# 2. Compare standard deviations
+sd_a <- sd(class_a)
+sd_b <- sd(class_b)
+c(sd_a, sd_b)
+
+# 3. Calculate coefficients of variation
+cv_a <- (sd_a / mean_a) * 100
+cv_b <- (sd_b / mean_b) * 100
+c(cv_a, cv_b)
+
+# 4. Create boxplots
+boxplot(class_a, class_b, names = c("Class A", "Class B"), 
+        main = "Comparison of Test Scores", col = c("lightblue", "lightpink"))
+
+# Dataset 2: Salaries at two companies
+company_x <- c(45, 48, 52, 55, 58, 60, 62, 65, 90, 150)
+company_y <- c(50, 52, 54, 56, 58, 60, 62, 64, 66, 68)
+
+# 1. Compare means
+mean_x <- mean(company_x)
+mean_y <- mean(company_y)
+c(mean_x, mean_y)
+
+# 2. Compare standard deviations
+sd_x <- sd(company_x)
+sd_y <- sd(company_y)
+c(sd_x, sd_y)
+
+# 3. Calculate coefficients of variation
+cv_x <- (sd_x / mean_x) * 100
+cv_y <- (sd_y / mean_y) * 100
+c(cv_x, cv_y)
+
+# 4. Create boxplots
+boxplot(company_x, company_y, names = c("Company X", "Company Y"), 
+        main = "Comparison of Salaries", col = c("lightgreen", "lightyellow"))
+
+# 5. Analysis:
+# For Dataset 1: Class B has a higher standard deviation than Class A,
+# indicating greater spread in test scores. The coefficient of variation
+# confirms that Class B's scores are more variable relative to the mean.
+
+# For Dataset 2: Company X has a much higher standard deviation and coefficient
+# of variation than Company Y, showing that salaries are much more dispersed at
+# Company X, likely due to some very high salaries (outliers) as seen in the boxplot.
+```
+
+---
+
+# 9. Hypothesis Testing {data-background-gradient="linear-gradient(135deg, #6366f1, #4f46e5)"}
+
+---
+
+## Introduction to Hypothesis Testing
+
+Hypothesis testing is a method for making decisions using data:
+
+- It helps determine if observed effects are statistically significant
+- It involves comparing what we observe against what we'd expect by chance
+- It's foundational for scientific research and data-driven decision making
+
+<div class="note">
+<strong>Note:</strong> Hypothesis testing doesn't prove a theory true; it helps us decide whether to reject a null hypothesis.
+</div>
+
+---
+
+## The Hypothesis Testing Framework
+
+Basic steps in hypothesis testing:
+
+1. **State the hypotheses**:
+   - Null hypothesis (H₀): No effect or no difference
+   - Alternative hypothesis (H₁ or Hₐ): The effect or difference exists
+
+2. **Determine the test statistic**:
+   - Choose an appropriate test
+   - Calculate the test statistic from your data
+
+3. **Calculate the p-value**:
+   - The probability of observing results at least as extreme as yours if H₀ is true
+
+4. **Make a decision**:
+   - Reject H₀ if p-value < significance level (α, typically 0.05)
+   - Fail to reject H₀ if p-value ≥ α
+
+---
+
+## Understanding the p-value
+
+The p-value is a probability measure:
+
+- It represents the likelihood of getting your results (or more extreme) by random chance
+- A small p-value (typically < 0.05) suggests the results are unlikely under the null hypothesis
+- The p-value doesn't measure the size of an effect or its practical significance
+- The p-value doesn't tell you the probability that your hypothesis is correct
+
+<div class="tip">
+<strong>Tip:</strong> A p-value of 0.05 means there's a 5% chance of observing such results if the null hypothesis is true.
+</div>
+
+---
+
+## Type I and Type II Errors
+
+Two types of errors can occur in hypothesis testing:
+
+- **Type I Error (False Positive)**:
+  - Rejecting H₀ when it's actually true
+  - Probability = α (significance level)
+
+- **Type II Error (False Negative)**:
+  - Failing to reject H₀ when it's actually false
+  - Probability = β
+  - 1 - β = Power (ability to detect a real effect)
+
+<div class="note">
+<strong>Note:</strong> There's a trade-off between these errors. Decreasing one often increases the other.
+</div>
+
+---
+
+## One-Sample t-test
+
+Tests whether a sample mean differs from a specified value:
+
+```{r}
+# Sample data: heights of 20 students (in cm)
+heights <- c(168, 172, 165, 175, 170, 168, 173, 169, 172, 175,
+             167, 166, 171, 174, 169, 170, 168, 171, 173, 169)
+
+# One-sample t-test (testing if mean height differs from 170 cm)
+t_result <- t.test(heights, mu = 170)
+t_result
+```
+
+<div class="tip">
+<strong>Tip:</strong> The one-sample t-test assumes the data is approximately normally distributed.
+</div>
+
+---
+
+## Two-Sample t-test
+
+Tests whether the means of two groups differ:
+
+```{r}
+# Sample data: test scores from two classes
+class_a <- c(72, 75, 80, 82, 85, 85, 86, 88, 90, 95)
+class_b <- c(60, 70, 75, 80, 82, 85, 88, 90, 92, 96)
+
+# Two-sample t-test
+t_result <- t.test(class_a, class_b)
+t_result
+
+# Assuming equal variances
+t_result_equal <- t.test(class_a, class_b, var.equal = TRUE)
+t_result_equal
+```
+
+<div class="note">
+<strong>Note:</strong> By default, R uses Welch's t-test, which doesn't assume equal variances.
+</div>
+
+---
+
+## Paired t-test
+
+Tests differences between paired observations:
+
+```{r}
+# Sample data: blood pressure before and after treatment
+before <- c(140, 138, 150, 148, 135, 160, 155, 142, 145, 152)
+after <- c(135, 130, 145, 140, 128, 148, 150, 135, 140, 145)
+
+# Paired t-test
+t_result <- t.test(before, after, paired = TRUE)
+t_result
+
+# Alternative calculation using differences
+differences <- before - after
+t.test(differences, mu = 0)
+```
+
+<div class="tip">
+<strong>Tip:</strong> Use paired t-test when observations are related (e.g., before/after measurements on the same subjects).
+</div>
+
+---
+
+## ANOVA (Analysis of Variance)
+
+Tests differences among means of three or more groups:
+
+```{r}
+# Sample data: crop yields from three different fertilizers
+fertilizer_a <- c(52, 55, 50, 53, 51, 54)
+fertilizer_b <- c(58, 60, 56, 59, 57, 55)
+fertilizer_c <- c(45, 48, 50, 47, 49, 46)
+
+# Combine data and create a factor for groups
+yields <- c(fertilizer_a, fertilizer_b, fertilizer_c)
+groups <- factor(rep(c("A", "B", "C"), each = 6))
+
+# One-way ANOVA
+anova_result <- aov(yields ~ groups)
+summary(anova_result)
+```
+
+---
+
+## Post-hoc Tests After ANOVA
+
+If ANOVA shows significant differences, post-hoc tests identify which groups differ:
+
+```{r}
+# Tukey's Honestly Significant Difference (HSD) test
+tukey_result <- TukeyHSD(anova_result)
+tukey_result
+
+# Visualize the results
+plot(tukey_result)
+```
+
+<div class="note">
+<strong>Note:</strong> Post-hoc tests adjust for multiple comparisons to control Type I error rate.
+</div>
+
+---
+
+## Chi-Square Test of Independence
+
+Tests whether two categorical variables are associated:
+
+```{r}
+# Sample data: gender and preference for programming language
+observed <- matrix(c(30, 15, 10, 25, 25, 20), nrow = 2, 
+                  dimnames = list(Gender = c("Male", "Female"), 
+                                 Language = c("Python", "R", "Java")))
+observed
+
+# Chi-square test
+chi_result <- chisq.test(observed)
+chi_result
+
+# Expected frequencies
+chi_result$expected
+```
+
+---
+
+## Correlation Test
+
+Tests whether two variables are correlated:
+
+```{r}
+# Sample data: study hours and exam scores
+study_hours <- c(2, 3, 3.5, 4, 4.5, 5, 5.5, 6, 7, 8)
+exam_scores <- c(65, 70, 75, 72, 80, 85, 82, 90, 88, 95)
+
+# Pearson correlation test
+cor_result <- cor.test(study_hours, exam_scores)
+cor_result
+
+# Spearman's rank correlation (non-parametric)
+spearman_result <- cor.test(study_hours, exam_scores, method = "spearman")
+spearman_result
+```
+
+<div class="tip">
+<strong>Tip:</strong> Use Spearman's correlation when the relationship is monotonic but not necessarily linear.
+</div>
+
+---
+
+## Non-parametric Tests
+
+When data doesn't meet assumptions for parametric tests:
+
+```{r}
+# Wilcoxon signed-rank test (paired non-parametric alternative to t-test)
+wilcox_result <- wilcox.test(before, after, paired = TRUE)
+wilcox_result
+
+# Mann-Whitney U test (unpaired non-parametric alternative to t-test)
+mannwhitney_result <- wilcox.test(class_a, class_b)
+mannwhitney_result
+
+# Kruskal-Wallis test (non-parametric alternative to one-way ANOVA)
+kruskal_result <- kruskal.test(yields ~ groups)
+kruskal_result
+```
+
+---
+
+## Statistical Power and Sample Size
+
+Statistical power affects the ability to detect effects:
+
+```{r}
+# Load the pwr package
+library(pwr)
+
+# Calculate sample size needed for t-test
+# (to detect medium effect size with 80% power at 0.05 significance)
+sample_size <- pwr.t.test(d = 0.5, power = 0.8, sig.level = 0.05, type = "two.sample")
+sample_size
+
+# Calculate power given sample size and effect size
+power_result <- pwr.t.test(n = 10, d = 0.8, sig.level = 0.05, type = "two.sample")
+power_result
+```
+
+<div class="note">
+<strong>Note:</strong> Higher power means greater ability to detect effects if they exist.
+</div>
+
+---
+
+## Exercise: Hypothesis Testing
+
+Use the following datasets for this exercise:
+
+```r
+# Dataset 1: Diet experiment (weight before and after)
+before_diet <- c(85, 92, 78, 84, 90, 95, 88, 82, 87, 91)
+after_diet <- c(80, 85, 75, 79, 87, 91, 83, 80, 84, 88)
+
+# Dataset 2: Plant growth with three different fertilizers
+fertilizer_a <- c(12.5, 13.1, 12.8, 14.2, 13.5, 12.9)
+fertilizer_b <- c(15.2, 14.8, 15.5, 16.0, 15.7, 15.0)
+fertilizer_c <- c(13.0, 12.7, 13.5, 14.0, 13.8, 13.2)
+
+# Dataset 3: Smoking status and lung disease
+lung_data <- matrix(c(35, 15, 65, 85), nrow = 2,
+                   dimnames = list(Smoking = c("Smoker", "Non-smoker"),
+                                  Disease = c("Yes", "No")))
+```
+
+For each dataset:
+1. Formulate appropriate null and alternative hypotheses
+2. Select and perform the appropriate statistical test
+3. Interpret the results
+4. Consider the limitations of your analysis
+
+---
+
+## Exercise Solutions
+
+```{r eval=FALSE}
+# Dataset 1: Diet experiment
+before_diet <- c(85, 92, 78, 84, 90, 95, 88, 82, 87, 91)
+after_diet <- c(80, 85, 75, 79, 87, 91, 83, 80, 84, 88)
+
+# 1 & 2. Hypotheses and test:
+# H0: The diet has no effect on weight (mean difference = 0)
+# H1: The diet has an effect on weight (mean difference ≠ 0)
+diet_result <- t.test(before_diet, after_diet, paired = TRUE)
+diet_result
+
+# 3. Interpretation:
+# The p-value is 0.0001, which is less than 0.05, so we reject the null hypothesis.
+# There is strong evidence that the diet reduces weight by an average of about 3.5 kg.
+
+# Dataset 2: Plant growth with different fertilizers
+fertilizer_a <- c(12.5, 13.1, 12.8, 14.2, 13.5, 12.9)
+fertilizer_b <- c(15.2, 14.8, 15.5, 16.0, 15.7, 15.0)
+fertilizer_c <- c(13.0, 12.7, 13.5, 14.0, 13.8, 13.2)
+
+# Combine data and create factor
+growth <- c(fertilizer_a, fertilizer_b, fertilizer_c)
+fert_group <- factor(rep(c("A", "B", "C"), each = 6))
+
+# 1 & 2. Hypotheses and test:
+# H0: All fertilizers produce equal mean growth (μA = μB = μC)
+# H1: At least one fertilizer produces different mean growth
+anova_result <- aov(growth ~ fert_group)
+summary(anova_result)
+
+# Post-hoc test to see which groups differ
+tukey_result <- TukeyHSD(anova_result)
+tukey_result
+
+# 3. Interpretation:
+# The p-value from ANOVA is very small, so we reject the null hypothesis.
+# There are significant differences between fertilizers.
+# The Tukey test shows fertilizer B produces significantly higher growth
+# than both A and C, while A and C don't differ significantly.
+
+# Dataset 3: Smoking and lung disease
+lung_data <- matrix(c(35, 15, 65, 85), nrow = 2,
+                   dimnames = list(Smoking = c("Smoker", "Non-smoker"),
+                                  Disease = c("Yes", "No")))
+
+# 1 & 2. Hypotheses and test:
+# H0: Smoking and lung disease are independent
+# H1: There is an association between smoking and lung disease
+chi_result <- chisq.test(lung_data)
+chi_result
+
+# 3. Interpretation:
+# The p-value is very small, so we reject the null hypothesis.
+# There is a statistically significant association between smoking
+# and lung disease. The data suggests smokers are more likely to
+# have lung disease than non-smokers.
+
+# 4. Limitations:
+# - For the diet study: Small sample size, no control group, no information
+#   about other factors that might influence weight loss.
+# - For the fertilizer study: Small sample size, no information about
+#   other growth conditions that might interact with fertilizer effects.
+# - For the smoking study: Observational data can't establish causation,
+#   and we have no information about potential confounding variables.
+```
+
+---
+
+# Thank You! {data-background="#3a0ca3"}
+
+## Comprehensive R Workshop
+
+### Questions? Let's discuss!
+
+Additional Resources:
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [RStudio Cheatsheets](https://posit.co/resources/cheatsheets/)
+- [R-bloggers](https://www.r-bloggers.com/)
+- [Stack Overflow - R](https://stackoverflow.com/questions/tagged/r)
+
+```{js, echo=FALSE}
+// Print PDF setup
+function printPDF() {
+  let link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match(/print-pdf/gi) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+  document.getElementsByTagName('head')[0].appendChild(link);
+}
+printPDF();
+```
